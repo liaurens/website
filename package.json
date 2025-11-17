@@ -1,0 +1,41 @@
+{
+  "name": "coaching-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A streamlined coaching management platform for booking, calendar sync, and automated invoicing",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "npm run dev --workspace=packages/api",
+    "dev:web": "npm run dev --workspace=packages/web",
+    "build": "npm run build --workspaces",
+    "build:api": "npm run build --workspace=packages/api",
+    "build:web": "npm run build --workspace=packages/web",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "rm -rf node_modules packages/*/node_modules packages/*/dist"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liaurens/website.git"
+  },
+  "keywords": [
+    "coaching",
+    "booking",
+    "calendar",
+    "invoicing",
+    "scheduling"
+  ],
+  "author": "",
+  "license": "MIT"
+}
