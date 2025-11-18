@@ -1,4 +1,4 @@
-import { Pool, QueryResult } from 'pg';
+import { Pool, QueryResult, QueryResultRow } from 'pg';
 import { config } from 'dotenv';
 
 // Load environment variables
@@ -28,7 +28,7 @@ pool.on('error', (err) => {
  * @param params - Query parameters
  * @returns Query result
  */
-export async function query<T = any>(
+export async function query<T extends QueryResultRow = any>(
   text: string,
   params?: any[]
 ): Promise<QueryResult<T>> {
@@ -70,7 +70,7 @@ export async function closePool() {
 /**
  * Find a single record by ID
  */
-export async function findById<T = any>(
+export async function findById<T extends QueryResultRow = any>(
   table: string,
   id: string
 ): Promise<T | null> {
@@ -84,7 +84,7 @@ export async function findById<T = any>(
 /**
  * Find all records from a table
  */
-export async function findAll<T = any>(
+export async function findAll<T extends QueryResultRow = any>(
   table: string,
   orderBy: string = 'created_at DESC'
 ): Promise<T[]> {
@@ -97,7 +97,7 @@ export async function findAll<T = any>(
 /**
  * Insert a new record
  */
-export async function insert<T = any>(
+export async function insert<T extends QueryResultRow = any>(
   table: string,
   data: Record<string, any>
 ): Promise<T> {
@@ -116,7 +116,7 @@ export async function insert<T = any>(
 /**
  * Update a record by ID
  */
-export async function update<T = any>(
+export async function update<T extends QueryResultRow = any>(
   table: string,
   id: string,
   data: Record<string, any>

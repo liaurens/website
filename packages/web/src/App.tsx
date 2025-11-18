@@ -1,6 +1,9 @@
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { BookingPage } from './pages/BookingPage';
+import { Button } from './components/common/Button';
 
-function App() {
+function HomePage() {
   const [apiMessage, setApiMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -38,12 +41,11 @@ function App() {
               Welcome to Your Coaching Platform! 👋
             </h2>
             <p className="text-gray-600 mb-6">
-              This is the beginning of your coaching management system. The project structure
-              is set up and ready for development!
+              Book your coaching session in just a few clicks. Select a date and time that works best for you.
             </p>
 
             {/* API Status */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-gray-50 rounded-lg p-4 mb-6">
               <h3 className="font-semibold text-gray-700 mb-2">API Connection Status:</h3>
               {loading ? (
                 <p className="text-gray-500">Connecting to API...</p>
@@ -54,46 +56,56 @@ function App() {
                 </div>
               )}
             </div>
+
+            <Link to="/book">
+              <Button size="lg" fullWidth>
+                Book a Session Now →
+              </Button>
+            </Link>
           </div>
 
           {/* Feature Cards */}
           <div className="grid md:grid-cols-2 gap-6">
             <FeatureCard
               icon="📅"
-              title="Client Booking"
-              description="Easy-to-use booking interface for clients to schedule sessions"
-              status="Coming Soon"
+              title="Easy Booking"
+              description="View available time slots and book your session instantly"
+              status="Available Now"
+              statusColor="success"
             />
             <FeatureCard
               icon="📱"
-              title="iPhone Dashboard"
-              description="Mobile-first coach dashboard for managing bookings on the go"
-              status="Coming Soon"
-            />
-            <FeatureCard
-              icon="📄"
-              title="Invoice Generation"
-              description="Automatic PDF invoice generation and email delivery"
-              status="Coming Soon"
+              title="Mobile Friendly"
+              description="Book from any device - desktop, tablet, or phone"
+              status="Available Now"
+              statusColor="success"
             />
             <FeatureCard
               icon="✉️"
-              title="Email Notifications"
-              description="Automated reminders and confirmations for clients and coaches"
+              title="Email Confirmations"
+              description="Receive confirmation and reminder emails for your sessions"
               status="Coming Soon"
+              statusColor="warning"
+            />
+            <FeatureCard
+              icon="📄"
+              title="Session History"
+              description="View your past and upcoming coaching sessions"
+              status="Coming Soon"
+              statusColor="warning"
             />
           </div>
 
-          {/* Next Steps */}
+          {/* Info Section */}
           <div className="mt-8 bg-blue-50 border-l-4 border-primary rounded-lg p-6">
-            <h3 className="font-bold text-gray-800 mb-3">🚀 Next Steps:</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li>✅ Project structure created</li>
-              <li>✅ Frontend and backend connected</li>
-              <li>⏳ Set up database (PostgreSQL)</li>
-              <li>⏳ Build booking API endpoints</li>
-              <li>⏳ Create booking calendar UI</li>
-            </ul>
+            <h3 className="font-bold text-gray-800 mb-3">How It Works:</h3>
+            <ol className="space-y-2 text-gray-700">
+              <li>1. Click "Book a Session Now" above</li>
+              <li>2. Select your preferred date and time</li>
+              <li>3. Enter your contact information</li>
+              <li>4. Submit your booking request</li>
+              <li>5. Receive confirmation email once approved</li>
+            </ol>
           </div>
         </div>
       </main>
@@ -114,18 +126,35 @@ interface FeatureCardProps {
   title: string;
   description: string;
   status: string;
+  statusColor: 'success' | 'warning';
 }
 
-function FeatureCard({ icon, title, description, status }: FeatureCardProps) {
+function FeatureCard({ icon, title, description, status, statusColor }: FeatureCardProps) {
+  const statusColors = {
+    success: 'bg-success',
+    warning: 'bg-warning',
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
       <div className="text-4xl mb-3">{icon}</div>
       <h3 className="text-xl font-bold text-gray-800 mb-2">{title}</h3>
       <p className="text-gray-600 mb-4">{description}</p>
-      <span className="inline-block bg-warning text-white text-sm px-3 py-1 rounded-full">
+      <span className={`inline-block ${statusColors[statusColor]} text-white text-sm px-3 py-1 rounded-full`}>
         {status}
       </span>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/book" element={<BookingPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
