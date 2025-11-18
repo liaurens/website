@@ -2,6 +2,9 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { config } from 'dotenv';
+import { logger } from './utils/logger';
+import bookingsRoutes from './routes/bookings.routes';
+import clientsRoutes from './routes/clients.routes';
 
 // Load environment variables
 config();
@@ -31,6 +34,10 @@ app.get('/api/hello', (req: Request, res: Response) => {
     version: '0.1.0',
   });
 });
+
+// API Routes
+app.use('/api/bookings', bookingsRoutes);
+app.use('/api/clients', clientsRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
